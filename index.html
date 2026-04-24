@@ -1,0 +1,2373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Aspire — Мини-воронка нового поколения</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0a0a0c;
+    --bg-deep: #050507;
+    --surface: #111114;
+    --surface-2: #1a1a1f;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --text: #f5f5f7;
+    --text-dim: #8a8a94;
+    --text-ghost: #4a4a54;
+    --silver: linear-gradient(135deg, #e8e8ed 0%, #b4b4be 25%, #e8e8ed 50%, #9a9aa4 75%, #e8e8ed 100%);
+    --pearl: linear-gradient(135deg, #ffffff 0%, #d4d4dc 40%, #a8a8b0 70%, #e8e8ed 100%);
+
+    /* Светлая тема */
+    --light-bg: #ededf0;
+    --light-surface: #ffffff;
+    --light-border: rgba(0, 0, 0, 0.1);
+    --light-border-strong: rgba(0, 0, 0, 0.18);
+    --light-text: #0f0f14;
+    --light-text-dim: #565660;
+    --light-text-ghost: #8a8a94;
+    --graphite: linear-gradient(180deg, #2a2a30 0%, #0a0a0c 50%, #3a3a42 100%);
+  }
+
+  /* Переопределения для секций с классом .light */
+  section.light {
+    background: var(--light-bg) !important;
+    color: var(--light-text);
+    border-top: 1px solid var(--light-border);
+    border-bottom: 1px solid var(--light-border);
+  }
+  .light .section-marker {
+    color: var(--light-text-ghost);
+  }
+  .light .section-marker::before {
+    background: var(--light-text-ghost);
+  }
+  .light .section-title {
+    color: var(--light-text);
+  }
+  .light .section-title .accent {
+    background: var(--graphite);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 600;
+  }
+  .light .section-title .dim {
+    color: var(--light-text-ghost);
+  }
+
+  /* Cards на светлом */
+  .light .case-card,
+  .light .product-card {
+    background: var(--light-surface);
+    border-color: var(--light-border);
+  }
+  .light .product-card.featured {
+    background: linear-gradient(135deg, #1a1a1f 0%, #0a0a0c 100%);
+    border-color: var(--light-border-strong);
+    color: var(--text);
+  }
+  .light .product-card.featured h4 { color: var(--text); }
+  .light .product-card.featured .product-tag {
+    background: var(--pearl);
+    color: #000;
+  }
+  .light .product-card.featured .product-list li {
+    color: var(--text-dim);
+    border-top-color: var(--border);
+  }
+  .light .product-card.featured .product-btn {
+    background: var(--pearl);
+    color: #000;
+  }
+
+  /* Light — тексты */
+  .light p,
+  .light .case-desc p,
+  .light .case-intro,
+  .light .about-text,
+  .light .service-desc,
+  .light .mechanic-step p,
+  .light .review-quote,
+  .light .faq-a,
+  .light .final-cta p.lead {
+    color: var(--light-text-dim);
+  }
+  .light .about-text strong,
+  .light .case-desc p strong,
+  .light .review-author strong { color: var(--light-text); }
+
+  .light .service-title,
+  .light .mechanic-step h4,
+  .light .faq-q h5,
+  .light .case-title,
+  .light .product-card h4,
+  .light .review-quote {
+    color: var(--light-text);
+  }
+
+  /* Light — номера, маркеры, лейблы */
+  .light .service-num,
+  .light .mechanic-num,
+  .light .review-meta,
+  .light .case-num,
+  .light .case-subtitle,
+  .light .case-meta-label,
+  .light .product-tag {
+    color: var(--light-text-ghost);
+  }
+  .light .product-tag:not(.featured) {
+    border-color: var(--light-border-strong);
+  }
+  .light .case-meta-value {
+    color: var(--light-text);
+  }
+
+  /* Light — границы */
+  .light .service-item,
+  .light .mechanic-step,
+  .light .review-item,
+  .light .faq-item,
+  .light .case-meta-item,
+  .light .case-meta-grid,
+  .light .case-feature,
+  .light .product-list li,
+  .light .case-card,
+  .light .case-features-pills,
+  .light .case-screenshot {
+    border-color: var(--light-border);
+  }
+
+  /* Light — pills */
+  .light .pill {
+    background: rgba(0,0,0,0.04);
+    border-color: var(--light-border);
+    color: var(--light-text-dim);
+  }
+  .light .pill.pill-active {
+    background: var(--graphite);
+    color: #fff;
+  }
+
+  /* Light — кнопки */
+  .light .case-link,
+  .light .product-btn,
+  .light .cta-btn:not(.primary),
+  .light .faq-q .toggle {
+    border-color: var(--light-border-strong);
+    color: var(--light-text);
+    background: transparent;
+  }
+  .light .case-link:hover,
+  .light .product-btn:hover,
+  .light .cta-btn:not(.primary):hover {
+    background: rgba(0,0,0,0.05);
+    border-color: var(--light-text);
+  }
+  .light .case-link .arrow-box,
+  .light .product-btn .arrow-box,
+  .light .cta-btn:not(.primary) .arrow-box {
+    background: var(--light-border-strong);
+    color: var(--light-text);
+  }
+  .light .faq-item.open .toggle {
+    background: var(--graphite);
+    color: #fff;
+  }
+
+  /* Light — bracket block */
+  .light .bracket-block,
+  .light .about-manifest {
+    background: var(--light-surface);
+    border-color: var(--light-border);
+    color: var(--light-text);
+  }
+  .light .bracket-block::before,
+  .light .bracket-block::after,
+  .light .about-manifest::before,
+  .light .about-manifest::after {
+    color: var(--light-text-dim);
+  }
+  .light .about-manifest p {
+    color: var(--light-text);
+  }
+
+  /* Light — case status */
+  .light .case-status {
+    background: rgba(0,0,0,0.04);
+    color: var(--light-text);
+    border-color: var(--light-border-strong);
+  }
+
+  /* Light — about photo caption */
+  .light .about-photo::after {
+    background: rgba(255,255,255,0.9);
+    color: var(--light-text);
+    border-color: var(--light-border-strong);
+  }
+
+  /* Light — final cta primary */
+  .light .cta-btn.primary {
+    background: var(--graphite);
+    color: #fff;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+  }
+  .light .cta-btn.primary .arrow-box {
+    background: #fff;
+    color: #000;
+  }
+
+  /* Light — цифры статистики: графитовый металл вместо перламутра */
+  .light .stat-number {
+    background: linear-gradient(
+      180deg,
+      #1a1a20 0%,
+      #0a0a0c 40%,
+      #3a3a42 70%,
+      #0a0a0c 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
+  }
+  .light .stat-label {
+    color: var(--light-text-dim);
+  }
+  .light .stat-row {
+    border-top-color: var(--light-border);
+  }
+
+  /* Light — footer links */
+  .light .footer-contacts a .label {
+    color: var(--light-text-ghost);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: #f5f5f7;
+    color: #0a0a0c;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    letter-spacing: -0.005em;
+  }
+
+  /* Hero — светлый фон как на телефоне */
+  .hero {
+    background: #f5f5f7 !important;
+    color: #0a0a0c;
+  }
+
+  /* Десктопный фон — подложка вокруг мобильной "рамки" */
+  @media (min-width: 480px) {
+    html {
+      background: 
+        radial-gradient(ellipse at 20% 30%, rgba(168, 133, 255, 0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(126, 200, 255, 0.1) 0%, transparent 50%),
+        #ededf0;
+      min-height: 100vh;
+    }
+    body {
+      max-width: 440px;
+      margin: 0 auto;
+      box-shadow: 0 0 60px rgba(0,0,0,0.15);
+    }
+    nav {
+      left: 50% !important;
+      right: auto !important;
+      transform: translateX(-50%) !important;
+      max-width: 440px;
+      width: 100%;
+    }
+  }
+
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+
+  /* ============ NAV ============ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 14px 20px;
+    background: rgba(10, 10, 12, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  nav .logo {
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  nav .logo::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--pearl);
+    box-shadow: 0 0 12px rgba(255,255,255,0.4);
+  }
+  nav .menu-btn {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    padding: 8px 14px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.2s ease;
+  }
+  nav .menu-btn:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: var(--text);
+  }
+  nav .ig-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    display: grid;
+    place-items: center;
+    color: var(--text);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  nav .ig-icon:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: var(--text);
+    transform: scale(1.05);
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    min-height: 100vh;
+    padding: 100px 20px 40px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -10%; left: 50%;
+    transform: translateX(-50%);
+    width: 140%; height: 60%;
+    background: 
+      radial-gradient(ellipse at 50% 25%, rgba(200, 180, 255, 0.08) 0%, rgba(180, 185, 200, 0.04) 30%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(10px);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse at 50% 40%, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 40%, black 30%, transparent 80%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-tag {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 50px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #565660;
+    font-family: 'JetBrains Mono', monospace;
+    align-self: flex-start;
+    margin-top: 10px;
+  }
+  .hero-tag .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #0a0a0c;
+    box-shadow: 0 0 8px rgba(0,0,0,0.3);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    margin: 40px 0;
+  }
+  .hero-content::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 44px;
+    width: 3px;
+    height: calc(100% - 80px);
+    background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.6) 20%, rgba(255,255,255,0.3) 50%, transparent 100%);
+    box-shadow: 0 0 20px rgba(255,255,255,0.5);
+  }
+
+  .hero h1 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-size: clamp(40px, 11vw, 64px);
+    line-height: 0.95;
+    letter-spacing: -0.045em;
+    margin-bottom: 28px;
+    color: #ffffff;
+  }
+  
+  /* Верх — "Продюсер уйдёт. SMM-щик уйдёт." — мельче, графит */
+  .hero h1 .main-small {
+    display: inline-block;
+    font-size: 0.65em;
+    line-height: 1.0;
+    font-weight: 600;
+    color: #5a5a64;
+    letter-spacing: -0.02em;
+  }
+
+  /* Низ — "А система — останется." — крупнее, тёмный переливающийся металлик */
+  .hero h1 .biggest {
+    display: block;
+    font-size: 1em;
+    line-height: 0.92;
+    font-weight: 900;
+    letter-spacing: -0.055em;
+    margin-top: 0.2em;
+  }
+  
+  /* "А система — останется" — усиленный перелив для sRGB экранов */
+  .hero h1 .accent-pearl {
+    background: linear-gradient(
+      110deg,
+      #0a0a0c 0%,
+      #2d1b4e 12%,
+      #5a1a7a 22%,
+      #7a2060 32%,
+      #1a1a2e 42%,
+      #0a0a0c 50%,
+      #1a3a6a 60%,
+      #4a1a8a 72%,
+      #7a2080 82%,
+      #2a1a4a 92%,
+      #0a0a0c 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer-hero 4s ease-in-out infinite;
+    filter: drop-shadow(0 2px 16px rgba(120, 50, 180, 0.35));
+  }
+  @keyframes shimmer-hero {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Переливающийся перламутр в светлых секциях — ярче для sRGB */
+  .section-title .accent-pearl {
+    display: inline-block;
+    background: linear-gradient(
+      110deg,
+      #a885ff 0%,
+      #e89eff 12%,
+      #ffa8d0 24%,
+      #7ec8ff 36%,
+      #b8c8ff 48%,
+      #ff8bc5 60%,
+      #7ec8ff 72%,
+      #c895ff 84%,
+      #a885ff 100%
+    );
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 800;
+    animation: shimmer 4s linear infinite;
+    filter: drop-shadow(0 0 20px rgba(168, 133, 255, 0.5)) drop-shadow(0 2px 8px rgba(255, 139, 197, 0.4));
+  }
+  .hero h1 .accent {
+    display: inline-block;
+    background: linear-gradient(
+      110deg,
+      #c8b5ff 0%,
+      #f0c8ff 15%,
+      #ffd4e5 30%,
+      #b4e4ff 45%,
+      #d0d8ff 60%,
+      #ffb8e0 75%,
+      #a8d0ff 90%,
+      #c8b5ff 100%
+    );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 800;
+    font-style: normal;
+    animation: shimmer 5s linear infinite;
+    filter: drop-shadow(0 0 24px rgba(200, 180, 255, 0.55)) drop-shadow(0 0 8px rgba(255, 200, 230, 0.3));
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+  /* "Мини-воронка" — чистый белый, крупно */
+  .hero h1 .main {
+    display: inline-block;
+    color: #ffffff;
+    font-weight: 800;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.25);
+  }
+  .hero h1 .main .bigger {
+    font-size: 1.15em;
+    display: block;
+    margin-top: 0.1em;
+    font-weight: 900;
+  }
+  .hero h1 .biggest {
+    font-size: 1.35em;
+    line-height: 0.85;
+    display: block;
+    margin-top: 0.25em;
+    font-weight: 900;
+  }
+  /* "— работает на тебя 24/7" — обычный графит, тонкий как у comuni-lab */
+  .hero h1 .dim {
+    display: inline-block;
+    font-size: 0.68em;
+    line-height: 1.1;
+    font-weight: 500;
+    color: #5a5a64;
+    letter-spacing: -0.03em;
+    margin-top: 10px;
+    -webkit-text-stroke: 0;
+    filter: none;
+    text-shadow: none;
+    background: none;
+  }
+
+  .hero-lead {
+    margin-bottom: 20px;
+    max-width: 420px;
+  }
+  .lead-intro {
+    font-size: 14px;
+    line-height: 1.55;
+    color: #374151;
+    margin: 0 0 10px 0;
+    font-weight: 600;
+  }
+  .lead-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px 0;
+  }
+  .lead-list li {
+    position: relative;
+    padding: 6px 0 6px 20px;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #4b5563;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .lead-list li:first-child {
+    border-top: none;
+  }
+  .lead-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    top: 6px;
+    color: #8a8a94;
+    font-weight: 500;
+  }
+  .lead-outro {
+    font-size: 14px;
+    line-height: 1.45;
+    color: #1a1a2e;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .hero-sub {
+    font-size: 11px;
+    line-height: 1.4;
+    color: #565660;
+    margin-bottom: 36px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    max-width: 350px;
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 22px 16px 26px;
+    background: var(--pearl);
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    transition: transform 0.2s ease;
+    position: relative;
+    box-shadow: 0 0 40px rgba(255,255,255,0.15);
+  }
+  .cta-primary:hover { transform: translateY(-2px); }
+  .cta-primary .arrow-box {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: #000;
+    color: #fff;
+    display: grid; place-items: center;
+    font-size: 12px;
+  }
+
+  .hero-photo {
+    position: relative;
+    z-index: 2;
+    margin: 0 -20px;
+    padding: 0 20px;
+  }
+  .hero-photo img {
+    width: 100%;
+    display: block;
+    filter: grayscale(0.15) contrast(1.08);
+    mask-image: linear-gradient(180deg, black 0%, black 75%, transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg, black 0%, black 75%, transparent 100%);
+  }
+  
+  .hero-bottom {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: -40px;
+  }
+
+  /* ============ Общие блоки ============ */
+  section {
+    padding: 80px 20px;
+    position: relative;
+  }
+
+  .section-marker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-marker::before {
+    content: '';
+    width: 12px; height: 1px;
+    background: var(--text-ghost);
+  }
+
+  .section-title {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 200;
+    font-size: clamp(36px, 11vw, 52px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 30px;
+    color: #ffffff;
+  }
+  .section-title .accent {
+    background: var(--pearl);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  /* (accent-pearl определён выше, с усиленными цветами) */
+  .section-title .dim {
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 300;
+  }
+
+  /* ============ БРЭКЕТ-БЛОК (как у comuni-lab) ============ */
+  .bracket-block {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.35;
+    padding: 24px 22px;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    position: relative;
+    color: var(--text);
+    margin-top: 18px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+  }
+  .bracket-block::before {
+    content: '[';
+    position: absolute;
+    top: 10px; left: 12px;
+    font-size: 22px;
+    color: var(--text-dim);
+    font-weight: 300;
+  }
+  .bracket-block::after {
+    content: ']';
+    position: absolute;
+    bottom: 10px; right: 12px;
+    font-size: 22px;
+    color: var(--text-dim);
+    font-weight: 300;
+  }
+  .bracket-block .inner {
+    padding: 0 12px;
+  }
+
+  /* ============ 2. БЛОК ЦИФР (статистика) ============ */
+  .stats {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stats-grid {
+    display: flex;
+    flex-direction: column;
+  }
+  .stat-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 28px 0;
+    border-top: 1px solid var(--border);
+    gap: 10px;
+  }
+  .stat-row:first-child { border-top: none; }
+  .stat-number {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 200;
+    font-size: clamp(60px, 22vw, 110px);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    background: var(--pearl);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    line-height: 1.5;
+    max-width: 220px;
+  }
+
+  /* ============ 3. УСЛУГИ (нумерованные) ============ */
+  .services { background: var(--bg); }
+  .service-item {
+    padding: 28px 0;
+    border-top: 1px solid var(--border);
+  }
+  .service-item:last-of-type { border-bottom: 1px solid var(--border); }
+  .service-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .service-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-ghost);
+    padding-top: 6px;
+  }
+  .service-title {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 26px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    flex: 1;
+  }
+  .service-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    padding-left: 40px;
+    margin-top: 6px;
+  }
+
+  /* ============ 4. ВОРОНКА (механика как у них) ============ */
+  .mechanics {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .mechanic-step {
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+  }
+  .mechanic-step:first-of-type { border-top: none; padding-top: 10px; }
+  .mechanic-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .mechanic-step h4 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .mechanic-step p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* ============ 5. ПРОДУКТЫ ============ */
+  .products { background: var(--bg); }
+  .product-card {
+    padding: 28px 22px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-top: 14px;
+    background: var(--surface);
+    position: relative;
+    transition: border 0.2s ease;
+  }
+  .product-card:hover { border-color: var(--border-strong); }
+  .product-card.featured {
+    background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+    border-color: var(--border-strong);
+  }
+  .product-tag {
+    font-family: 'JetBrains Mono', monospace;
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--border-strong);
+    color: var(--text-dim);
+    border-radius: 50px;
+    margin-bottom: 16px;
+  }
+  .product-card.featured .product-tag {
+    background: var(--pearl);
+    color: #000;
+    border: none;
+    font-weight: 600;
+  }
+  .product-card h4 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 26px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+    color: var(--text);
+  }
+  .product-list {
+    list-style: none;
+    margin: 14px 0 22px;
+    padding: 0;
+  }
+  .product-list li {
+    padding: 8px 0 8px 24px;
+    font-size: 13px;
+    position: relative;
+    line-height: 1.5;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border);
+  }
+  .product-list li:first-child { border-top: none; }
+  .product-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--text-ghost);
+  }
+  .product-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  .product-btn:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: var(--text);
+  }
+  .product-card.featured .product-btn {
+    background: var(--pearl);
+    color: #000;
+    border: none;
+    font-weight: 700;
+  }
+  .product-btn .arrow-box {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--border-strong);
+    color: var(--text);
+    display: grid; place-items: center;
+    font-size: 10px;
+  }
+  .product-card.featured .product-btn .arrow-box {
+    background: #000;
+    color: #fff;
+  }
+
+  /* ============ 6. ОТЗЫВЫ ============ */
+  .reviews {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+  }
+  .review-item {
+    padding: 28px 0;
+    border-top: 1px solid var(--border);
+  }
+  .review-item:first-of-type { border-top: none; padding-top: 8px; }
+  .review-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    margin-bottom: 14px;
+  }
+  .review-quote {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+  .review-author {
+    font-size: 12px;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .review-author strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ============ 7. О НАС ============ */
+  .about {
+    background: var(--bg);
+  }
+  .about-photo {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background-image: url('images/alisa_kaspi.jpg');
+    background-size: cover;
+    background-position: center;
+    margin: 20px 0 28px;
+    border-radius: 4px;
+    filter: grayscale(0.25) contrast(1.05);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .about-photo::after {
+    content: 'Alisa · Founder';
+    position: absolute;
+    bottom: 12px; left: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text);
+    background: rgba(0,0,0,0.7);
+    border: 1px solid var(--border-strong);
+    padding: 6px 10px;
+    border-radius: 30px;
+    backdrop-filter: blur(8px);
+  }
+  .about-text {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-dim);
+    margin-bottom: 18px;
+  }
+  .about-text strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .about-manifest {
+    margin-top: 24px;
+    padding: 24px 22px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+    position: relative;
+  }
+  .about-manifest::before {
+    content: '[';
+    position: absolute;
+    top: 10px; left: 12px;
+    font-size: 22px;
+    color: var(--text-dim);
+  }
+  .about-manifest::after {
+    content: ']';
+    position: absolute;
+    bottom: 10px; right: 12px;
+    font-size: 22px;
+    color: var(--text-dim);
+  }
+  .about-manifest p {
+    padding: 0 14px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.4;
+    color: var(--text);
+  }
+
+  /* ============ 8. FAQ ============ */
+  .faq {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+  }
+  .faq-item {
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 22px 0;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .faq-item:last-of-type { border-bottom: 1px solid rgba(255, 255, 255, 0.14); }
+  .faq-item:hover {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .faq-q {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+  }
+  .faq-q h5 {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.35;
+    flex: 1;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+  }
+  .faq-q .toggle {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: grid; place-items: center;
+    font-size: 18px;
+    color: #ffffff;
+    flex-shrink: 0;
+    transition: transform 0.3s ease, background 0.2s ease;
+    font-weight: 300;
+    background: rgba(255,255,255,0.05);
+  }
+  .faq-item.open .toggle {
+    transform: rotate(45deg);
+    background: #ffffff;
+    color: #000;
+    border: none;
+  }
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.7);
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding-right: 48px;
+  }
+  .faq-item.open .faq-a {
+    max-height: 400px;
+    padding-top: 16px;
+  }
+
+  /* ============ КЕЙС ============ */
+  .case-section {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+  }
+  .case-intro {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.55;
+    max-width: 340px;
+    margin-bottom: 28px;
+  }
+
+  .case-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 18px;
+    position: relative;
+  }
+  .case-card-header {
+    padding: 20px 22px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .case-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+  }
+  .case-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--text);
+    background: rgba(255,255,255,0.08);
+    padding: 4px 10px;
+    border-radius: 30px;
+    border: 1px solid var(--border-strong);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .case-status::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #7fe38a;
+    box-shadow: 0 0 8px rgba(127, 227, 138, 0.6);
+  }
+  .case-title-row {
+    padding: 0 22px 20px;
+  }
+  .case-title {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 32px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .case-title .accent {
+    background: var(--pearl);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 500;
+    font-style: italic;
+  }
+  .case-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .case-screenshot {
+    width: 100%;
+    display: block;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Pills под заголовком — как табы форматов в боте */
+  .case-features-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 22px 22px;
+    border-bottom: 1px solid var(--border);
+  }
+  .pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 7px 14px;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+  }
+  .pill.pill-active {
+    background: var(--pearl);
+    color: #000;
+    border: none;
+    font-weight: 600;
+  }
+
+  .case-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+  .case-meta-item {
+    padding: 18px 22px;
+    border-right: 1px solid var(--border);
+  }
+  .case-meta-item:nth-child(2n) { border-right: none; }
+  .case-meta-item:nth-child(n+3) { border-top: 1px solid var(--border); }
+  .case-meta-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+    margin-bottom: 6px;
+  }
+  .case-meta-value {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.2;
+    color: var(--text);
+  }
+
+  .case-desc {
+    padding: 22px 22px 4px;
+  }
+  .case-desc p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+  .case-desc p strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .case-features {
+    padding: 8px 22px 20px;
+  }
+  .case-feature {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.45;
+  }
+  .case-feature .marker {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-ghost);
+    flex-shrink: 0;
+  }
+
+  .case-cta-row {
+    padding: 16px 22px 22px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .case-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 18px;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .case-link:hover {
+    border-color: var(--text);
+    background: rgba(255,255,255,0.05);
+  }
+  .case-link .arrow-box {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--border-strong);
+    color: var(--text);
+    display: grid; place-items: center;
+    font-size: 10px;
+  }
+
+  /* ============ 9. CTA ============ */
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 60px;
+  }
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    top: 30%; left: -30%;
+    width: 160%; height: 60%;
+    background: radial-gradient(ellipse at center, rgba(180, 180, 190, 0.1) 0%, transparent 55%);
+    pointer-events: none;
+  }
+  .final-cta-inner {
+    position: relative;
+    z-index: 2;
+  }
+  .final-cta p.lead {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    max-width: 340px;
+  }
+  .cta-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 22px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    color: var(--text);
+    transition: all 0.2s ease;
+  }
+  .cta-btn:hover {
+    border-color: var(--text);
+    background: rgba(255,255,255,0.05);
+  }
+  .cta-btn.primary {
+    background: var(--pearl);
+    color: #000;
+    border: none;
+    box-shadow: 0 0 30px rgba(255,255,255,0.15);
+  }
+  .cta-btn .arrow-box {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--border-strong);
+    color: var(--text);
+    display: grid; place-items: center;
+    font-size: 12px;
+  }
+  .cta-btn.primary .arrow-box {
+    background: #000;
+    color: #fff;
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: var(--bg-deep);
+    color: var(--text);
+    padding: 40px 20px 24px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-title {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 200;
+    font-size: 42px;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+  }
+  .footer-title .accent {
+    background: var(--pearl);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 400;
+    font-style: italic;
+  }
+  .footer-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-contacts a {
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+  }
+  .footer-contacts a .label {
+    color: var(--text-ghost);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+  }
+
+  @media (min-width: 440px) {
+    .stat-row { grid-template-columns: 1.4fr 1fr; align-items: end; }
+  }
+  /* ============ PAIN SECTION ============ */
+  .pain-section {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+  }
+  .pain-grid {
+    display: grid;
+    gap: 18px;
+    margin-bottom: 40px;
+  }
+  .pain-item {
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .pain-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .pain-item p {
+    color: rgba(255,255,255,0.85);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .pain-dialogue {
+    padding: 28px 24px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    text-align: center;
+  }
+  .dialogue-thought {
+    font-style: italic;
+    color: rgba(255,255,255,0.6);
+    font-size: 15px;
+    margin-bottom: 14px;
+    line-height: 1.45;
+  }
+  .dialogue-answer {
+    color: rgba(255,255,255,0.95);
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 768px) {
+    .pain-grid { gap: 14px; }
+    .pain-item { padding: 14px 16px; gap: 12px; }
+    .pain-dialogue { padding: 20px 18px; }
+  }
+
+  /* ============ TRIED SECTION ============ */
+  .tried-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+  }
+  .tried-section.light {
+    background: var(--light-bg) !important;
+    border-top: 1px solid var(--light-border);
+  }
+  .tried-list {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .tried-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .tried-section.light .tried-item {
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+  .tried-item:last-child {
+    border-bottom: none;
+  }
+  .tried-icon {
+    color: rgba(255,100,100,0.8);
+    font-size: 16px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .tried-section.light .tried-icon {
+    color: #dc2626;
+  }
+  .tried-item p {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+    line-height: 1.45;
+    margin: 0;
+  }
+  .tried-section.light .tried-item p {
+    color: #374151;
+  }
+  .tried-conclusion {
+    font-style: italic;
+    text-align: center;
+    color: rgba(255,255,255,0.7);
+    font-size: 15px;
+    padding: 20px 0;
+  }
+  .tried-section.light .tried-conclusion {
+    color: #4b5563;
+  }
+
+  /* ============ GAP SECTION ============ */
+  .gap-section {
+    background: var(--bg-deep);
+    border-top: 1px solid var(--border);
+  }
+  .gap-keis {
+    margin: 32px 0;
+    display: grid;
+    gap: 24px;
+  }
+  .keis-item {
+    padding: 20px 22px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+  }
+  .keis-title {
+    font-weight: 600;
+    color: rgba(255,255,255,0.95);
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+  .keis-text {
+    color: rgba(255,255,255,0.75);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+  }
+  .keis-gallery {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin: 20px 0 16px;
+    flex-wrap: wrap;
+  }
+  .keis-phone-mockup {
+    width: 140px;
+    max-width: 44%;
+    aspect-ratio: 9/19;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 3px solid #1a1a1f;
+    box-shadow: 
+      0 10px 40px rgba(0,0,0,0.4),
+      0 4px 16px rgba(0,0,0,0.3),
+      inset 0 0 0 1px rgba(255,255,255,0.08);
+    position: relative;
+    background: #000;
+    transition: transform 0.3s ease;
+  }
+  .keis-phone-mockup:hover {
+    transform: translateY(-4px) scale(1.02);
+  }
+  .keis-phone-mockup img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .keis-caption {
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-top: 8px;
+  }
+
+  /* Team CTA после кейсов */
+  .team-cta {
+    margin-top: 40px;
+    padding: 32px 24px;
+    background: linear-gradient(135deg, rgba(168,133,255,0.08) 0%, rgba(126,200,255,0.06) 100%);
+    border: 1px solid rgba(168,133,255,0.2);
+    border-radius: 16px;
+    text-align: center;
+  }
+  .team-cta-title {
+    font-family: 'Manrope', sans-serif;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.3;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 24px;
+    letter-spacing: -0.015em;
+  }
+  .team-cta-title .accent-pearl {
+    font-weight: 700;
+  }
+  .team-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 28px 16px 28px;
+    background: linear-gradient(135deg, #ffffff 0%, #e8e8ed 100%);
+    color: #0a0a0c !important;
+    text-decoration: none;
+    border-radius: 50px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: transform 0.2s ease;
+  }
+  .team-cta-btn:hover {
+    transform: translateY(-2px);
+  }
+  .team-cta-btn .arrow-box {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #0a0a0c;
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+  }
+
+  @media (max-width: 400px) {
+    .keis-phone-mockup { width: 130px; }
+    .keis-gallery { gap: 10px; }
+  }
+
+  /* ============ WHO ARE YOU SECTION ============ */
+  .whoareyou-section {
+    background: var(--surface);
+  }
+  .whoareyou-section.light {
+    background: var(--light-bg) !important;
+  }
+  .persona-grid {
+    display: grid;
+    gap: 24px;
+    margin: 32px 0;
+  }
+  .persona-item {
+    padding: 24px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+  }
+  /* На светлом фоне — белые карточки с тёмными текстами */
+  .whoareyou-section.light .persona-item {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .persona-header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .persona-emoji {
+    font-size: 24px;
+  }
+  .persona-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.95);
+  }
+  .whoareyou-section.light .persona-title {
+    color: #0f0f14;
+  }
+  .persona-pain {
+    margin-bottom: 16px;
+  }
+  .persona-solution {
+  }
+  .persona-pain strong,
+  .persona-solution strong {
+    color: rgba(255,255,255,0.9);
+    font-weight: 600;
+  }
+  .whoareyou-section.light .persona-pain strong,
+  .whoareyou-section.light .persona-solution strong {
+    color: #0f0f14;
+  }
+  .persona-pain p,
+  .persona-solution p {
+    color: rgba(255,255,255,0.75);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .whoareyou-section.light .persona-pain p,
+  .whoareyou-section.light .persona-solution p {
+    color: #565660;
+  }
+  .solution-extra {
+    margin-top: 10px !important;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(168,133,255,0.4);
+    font-style: italic;
+    font-size: 13px !important;
+    color: #7a3a9a !important;
+    font-weight: 500;
+  }
+  .common-benefits {
+    margin-top: 32px;
+    padding: 24px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+  }
+  .whoareyou-section.light .common-benefits {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .common-benefits h4 {
+    color: rgba(255,255,255,0.95);
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+  .whoareyou-section.light .common-benefits h4 {
+    color: #0f0f14;
+  }
+  .benefits-list {
+    display: grid;
+    gap: 10px;
+  }
+  .benefit-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+  }
+  .whoareyou-section.light .benefit-item {
+    color: #565660;
+  }
+  .benefit-check {
+    color: rgba(100,255,100,0.8);
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .whoareyou-section.light .benefit-check {
+    color: #16a34a;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">ASPIRE</div>
+  <div style="display: flex; gap: 8px; align-items: center;">
+    <a href="https://www.instagram.com/alisa_aimarketing" target="_blank" class="ig-icon" aria-label="Instagram">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2.5" y="2.5" width="19" height="19" rx="5" stroke="currentColor" stroke-width="1.8"/>
+        <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.8"/>
+        <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+      </svg>
+    </a>
+    <button class="menu-btn" onclick="document.getElementById('cta-final').scrollIntoView({behavior:'smooth'})">Связаться</button>
+  </div>
+</nav>
+
+<!-- 1. HERO -->
+<section class="hero">
+  <div class="hero-tag">
+    <span class="dot"></span>
+    <span>AI · AUTOMATION · 2026</span>
+  </div>
+
+  <div class="hero-content">
+    <h1>
+      <span class="main-small">Продюсер уйдёт<br>SMM-щик уйдёт</span><br>
+      <span class="accent-pearl biggest">А&nbsp;система&nbsp;—<br>останется</span>
+    </h1>
+    <div class="hero-lead">
+      <p class="lead-intro">Упаковываю тебя и твой бизнес в AI-систему:</p>
+      <ul class="lead-list">
+        <li>агент знает всё о тебе</li>
+        <li>воронка ведёт клиента от рекламы до оплаты</li>
+        <li>приложение принимает деньги</li>
+        <li>контент постится сам</li>
+      </ul>
+      <p class="lead-outro">Ты больше ни от кого не зависишь.</p>
+    </div>
+    <p class="hero-sub">Под ключ за 2 недели. Обучу. Вся система — твоя навсегда.</p>
+    <a href="https://wa.me/77073442777?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%8B%D0%B9%20%D1%80%D0%B0%D0%B7%D0%B1%D0%BE%D1%80" target="_blank" class="cta-primary">
+      Записаться на бесплатный разбор
+      <span class="arrow-box">→</span>
+    </a>
+  </div>
+
+  <div class="hero-photo">
+    <img src="images/alisa.jpg" alt="Алиса — Aspire">
+  </div>
+
+  <div class="hero-bottom">
+    <span>EST · 2024</span>
+    <span>Almaty · KZ</span>
+  </div>
+</section>
+
+<!-- 2. БОЛИ — "Знакомо?" -->
+<section class="pain-section">
+  <div class="section-marker">( 01 ) — Идентификация</div>
+  <h2 class="section-title">
+    <span class="accent-pearl">Знакомо?</span>
+  </h2>
+
+  <div class="pain-grid">
+    <div class="pain-item">
+      <div class="pain-icon">💸</div>
+      <p>Платишь маркетологу, SMM-щику, продюсеру — а результат непонятный. Уходят — и всё рушится</p>
+    </div>
+
+    <div class="pain-item">
+      <div class="pain-icon">🔁</div>
+      <p>Каждый месяц объясняешь всё заново новому человеку</p>
+    </div>
+
+    <div class="pain-item">
+      <div class="pain-icon">🌙</div>
+      <p>Контент делаешь сама до 2 ночи, а заявок — ноль</p>
+    </div>
+
+    <div class="pain-item">
+      <div class="pain-icon">⏰</div>
+      <p>Клиент написал «сколько стоит?» — ты ответила через 3 часа, он уже купил у другого</p>
+    </div>
+
+    <div class="pain-item">
+      <div class="pain-icon">🚪</div>
+      <p>Воронки нет — клиент увидел рекламу, перешёл, и потерялся. Нет пути от интереса до оплаты</p>
+    </div>
+
+    <div class="pain-item">
+      <div class="pain-icon">📉</div>
+      <p>Лендинг есть, форма есть — а до оплаты доходит 3 человека из 100</p>
+    </div>
+
+    <div class="pain-item">
+      <div class="pain-icon">🧩</div>
+      <p>Нет системы: контент отдельно, реклама отдельно, оплата отдельно — ничего не связано</p>
+    </div>
+
+    <div class="pain-item">
+      <div class="pain-icon">🤯</div>
+      <p>Все говорят «тебе нужен AI, автоматизация, воронка» — но когда разбираться? У тебя бизнес</p>
+    </div>
+  </div>
+
+  <div class="pain-dialogue">
+    <p class="dialogue-thought">«Может, проблема во мне? Может, я просто не умею продавать?»</p>
+    <p class="dialogue-answer">Нет. Ты умеешь. Просто у тебя нет инструмента, который работает без тебя.</p>
+  </div>
+</section>
+
+<!-- 2. КЕЙС — убран -->
+
+<!-- 3. УЖЕ ПРОБОВАЛА -->
+<section class="tried-section light">
+  <div class="section-marker">( 02 ) — Перебор решений</div>
+  <h2 class="section-title">
+    Ты уже пробовала<br><span style="color:#0f0f14; font-weight: 800; font-style: normal;">Не сработало</span>
+  </h2>
+
+  <div class="tried-list">
+    <div class="tried-item">
+      <div class="tried-icon">✗</div>
+      <p>Нанимала SMM-щика — ушёл, всё встало</p>
+    </div>
+    <div class="tried-item">
+      <div class="tried-icon">✗</div>
+      <p>Покупала курсы по воронкам — некогда внедрять, бизнес не ждёт</p>
+    </div>
+    <div class="tried-item">
+      <div class="tried-icon">✗</div>
+      <p>Делала лендинг — клиенты приходят и теряются, нет пути до оплаты</p>
+    </div>
+    <div class="tried-item">
+      <div class="tried-icon">✗</div>
+      <p>Пробовала Taplink — красиво, но без оплаты и без системы</p>
+    </div>
+    <div class="tried-item">
+      <div class="tried-icon">✗</div>
+      <p>Заказывала контент-план — без базы знаний о тебе он мёртвый</p>
+    </div>
+  </div>
+
+  <div class="tried-conclusion">
+    Проблема не в тебе. Проблема в том, что тебе давали куски — а не систему.
+  </div>
+</section>
+
+<!-- 4. РАЗРЫВ -->
+<section class="gap-section">
+  <div class="section-marker">( 03 ) — Новая реальность</div>
+  <h2 class="section-title">
+    <span class="dim">В 2026 году выигрывает не тот,<br>кто больше работает</span><br>
+    А тот, у кого есть <span class="accent-pearl">система</span>
+  </h2>
+
+  <p style="color: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.55; margin-bottom: 32px; max-width: 500px;">
+    Пока ты отвечаешь на «сколько стоит?» в директе — твой конкурент спит. Его AI-агент пишет контент. Его мини-приложение принимает оплату. Его воронка ведёт клиента от рекламы до покупки — автоматически.
+  </p>
+
+  <p style="color: rgba(255,255,255,0.85); font-size: 14px; margin-bottom: 24px; font-weight: 500;">
+    Это не фантазия. Вот два примера:
+  </p>
+
+  <div class="gap-keis">
+    <div class="keis-item">
+      <div class="keis-title">Кейс 1 — магазин косметики, Алматы</div>
+      <p class="keis-text">Собрала бот-каталог в Telegram с автооплатой. Настроила AI-агента компании — он знает все продукты, сам выкладывает товар на «Мой склад»: фотографии, описания, остатки. Владелица занимается клиентами — система работает сама.</p>
+      <div class="keis-gallery">
+        <div class="keis-phone-mockup">
+          <img src="images/image_03.jpg" alt="Ohlala Cosmetics — каталог">
+        </div>
+        <div class="keis-phone-mockup">
+          <img src="images/image_04.png" alt="Ohlala Cosmetics — оплата">
+        </div>
+      </div>
+      <div class="keis-caption">Ohlala Cosmetics · Telegram Mini App</div>
+    </div>
+
+    <div class="keis-item">
+      <div class="keis-title">Кейс 2 — я сама</div>
+      <p class="keis-text">Я — Алиса, основатель Aspire Agency. Упаковала свои 9 мини-продуктов как эксперт: мини-приложение с Kaspi оплатой, AI-агент пишет контент в моём голосе и постит в канал, воронка ведёт клиента от Reels до покупки. Система, которую я предлагаю — та же, что работает на меня каждый день.</p>
+      <div class="keis-gallery">
+        <div class="keis-phone-mockup">
+          <img src="images/image_05.jpg" alt="Aspire — Город Возможностей">
+        </div>
+        <div class="keis-phone-mockup">
+          <img src="images/image_06.jpg" alt="Aspire — AI агент для магазина">
+        </div>
+      </div>
+      <div class="keis-caption">Aspire Agency · Город Возможностей</div>
+    </div>
+  </div>
+
+  <div class="team-cta">
+    <div class="team-cta-title">Ну а если тебе нужна команда —<br><span class="accent-pearl">я с радостью предоставлю свою под ключ</span></div>
+    <a href="https://wa.me/77073442777?text=%D0%A5%D0%BE%D1%87%D1%83%20%D0%BF%D0%BE%D0%B4%20%D0%BA%D0%BB%D1%8E%D1%87%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%83" target="_blank" class="team-cta-btn">
+      Хочу под ключ систему
+      <span class="arrow-box">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- 4. МЕХАНИКА -->
+<!-- 5. ВЫБЕРИ КТО ТЫ -->
+<section class="whoareyou-section light">
+  <div class="section-marker">( 04 ) — Найди себя</div>
+  <h2 class="section-title">
+    Я собираю систему под тебя<br><span style="color:#0f0f14; font-weight: 800; font-style: normal;">Найди себя</span>
+  </h2>
+
+  <div class="persona-grid">
+    <div class="persona-item">
+      <div class="persona-header">
+        <div class="persona-emoji">🏪</div>
+        <div class="persona-title">ПРЕДПРИНИМАТЕЛЬ (товар, магазин, производство)</div>
+      </div>
+      
+      <div class="persona-pain">
+        <strong>Боль:</strong>
+        <p>Много вручную. SMM, маркетолог — каждого отдельно, дорого. Уходят — объясняешь заново. Нет базы, нет контент-плана, нет системы.</p>
+      </div>
+
+      <div class="persona-solution">
+        <strong>Решение:</strong>
+        <p>Агент с базой о твоём бизнесе + каталог-бот с Kaspi Pay + интеграция с учёткой + воронка + автопостинг + готовый контент каждый день.</p>
+        <p class="solution-extra">Также могу предоставить команду под ключ: выездные съёмки, монтаж и таргетированную рекламу.</p>
+      </div>
+    </div>
+
+    <div class="persona-item">
+      <div class="persona-header">
+        <div class="persona-emoji">👨‍⚖️</div>
+        <div class="persona-title">УСЛУГИ (юрист, бухгалтер, клиника, салон)</div>
+      </div>
+      
+      <div class="persona-pain">
+        <strong>Боль:</strong>
+        <p>Клиенты только по сарафану. Не знаешь что постить и снимать. Нанимать SMM дорого. Оплата — реквизиты в переписке. Не знаешь как выделиться.</p>
+      </div>
+
+      <div class="persona-solution">
+        <strong>Решение:</strong>
+        <p>Агент пишет контент каждый день + бот с услугами и Kaspi оплатой + воронка + позиционирование + автопостинг.</p>
+        <p class="solution-extra">Также могу предоставить команду под ключ: выездные съёмки, монтаж и таргетированную рекламу.</p>
+      </div>
+    </div>
+
+    <div class="persona-item">
+      <div class="persona-header">
+        <div class="persona-emoji">🎯</div>
+        <div class="persona-title">ЭКСПЕРТ (психолог, нутрициолог, наставник, специалист)</div>
+      </div>
+      
+      <div class="persona-pain">
+        <strong>Боль:</strong>
+        <p>Контент до ночи, зависишь от продюсера, продаж ноль. Клиенты не доходят до оплаты.</p>
+      </div>
+
+      <div class="persona-solution">
+        <strong>Решение:</strong>
+        <p>Агент пишет в твоём голосе и постит сам + бот с каталогом услуг и Kaspi Pay + воронка от рекламы до оплаты.</p>
+        <p class="solution-extra">Также могу предоставить команду под ключ: выездные съёмки, монтаж и таргетированную рекламу.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="common-benefits">
+    <h4>Что общего:</h4>
+    <div class="benefits-list">
+      <div class="benefit-item">
+        <div class="benefit-check">✅</div>
+        <div>Вся система — твоя навсегда. Никакой подписки.</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-check">✅</div>
+        <div>AI-агент с ТВОЕЙ базой знаний — не забывает, не увольняется.</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-check">✅</div>
+        <div>Обучу пользоваться — не бросаю после настройки.</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-check">✅</div>
+        <div>Под ключ за 2 недели.</div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-check">✅</div>
+        <div>Команда, которая работает по твоей системе под ключ.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. ПРОДУКТЫ -->
+<section class="products">
+  <div class="section-marker">( 05 ) — С чего начать</div>
+  <h2 class="section-title">
+    Четыре точки<br><span class="accent-pearl">входа</span>
+  </h2>
+  <p style="color: var(--text-dim); font-size: 14px; margin-bottom: 10px; max-width: 320px;">Выбирай по ресурсу и глубине запроса.</p>
+
+  <div class="product-card">
+    <div class="product-tag">Бесплатно</div>
+    <h4>Разбор твоей воронки</h4>
+    <ul class="product-list">
+      <li>30-минутный созвон со мной лично</li>
+      <li>Разберём, где у тебя сейчас теряются клиенты</li>
+      <li>Покажу, как должна работать система в твоей нише</li>
+      <li>Уйдёшь с картой действий на месяц</li>
+    </ul>
+    <a href="https://wa.me/77073442777?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%8B%D0%B9%20%D1%80%D0%B0%D0%B7%D0%B1%D0%BE%D1%80%20%D0%B2%D0%BE%D1%80%D0%BE%D0%BD%D0%BA%D0%B8" target="_blank" class="product-btn">
+      Записаться
+      <span class="arrow-box">→</span>
+    </a>
+  </div>
+
+  <div class="product-card">
+    <div class="product-tag">Мини-продукт</div>
+    <h4>Гайд «Мини-воронка за 7 дней»</h4>
+    <ul class="product-list">
+      <li>Пошаговая структура: от оффера до бота</li>
+      <li>Шаблоны текстов для всех этапов</li>
+      <li>Чек-лист технической сборки</li>
+      <li>Примеры воронок в 5 нишах</li>
+    </ul>
+    <a href="https://wa.me/77073442777?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BF%D0%BE%D0%BB%D1%83%D1%87%D0%B8%D1%82%D1%8C%20%D0%B3%D0%B0%D0%B9%D0%B4%20%C2%AB%D0%9C%D0%B8%D0%BD%D0%B8-%D0%B2%D0%BE%D1%80%D0%BE%D0%BD%D0%BA%D0%B0%20%D0%B7%D0%B0%207%20%D0%B4%D0%BD%D0%B5%D0%B9%C2%BB" target="_blank" class="product-btn">
+      Получить
+      <span class="arrow-box">→</span>
+    </a>
+  </div>
+
+  <div class="product-card">
+    <div class="product-tag">Сопровождение</div>
+    <h4>Kaspi магазин — чтобы ты не погрязла в операционке</h4>
+    <ul class="product-list">
+      <li>Сопровождаю при открытии Kaspi магазина — от регистрации до первых продаж</li>
+      <li>Обучаю тебя и всю твою команду — ты управляешь, а не разгребаешь заявки ночами</li>
+      <li>Карточки, которые продают: фото, описания, ключевые слова</li>
+      <li>Ассортимент, цены, комиссии, сезонность — разложу по полкам</li>
+      <li>Связываю Kaspi с Instagram, чтобы вытянуть дополнительные продажи</li>
+    </ul>
+    <a href="https://wa.me/77073442777?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D1%81%D0%BE%D0%BF%D1%80%D0%BE%D0%B2%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BF%D0%BE%20Kaspi%20%D0%BC%D0%B0%D0%B3%D0%B0%D0%B7%D0%B8%D0%BD%D1%83" target="_blank" class="product-btn">
+      Проконсультироваться
+      <span class="arrow-box">→</span>
+    </a>
+  </div>
+
+  <div class="product-card featured">
+    <div class="product-tag">Под ключ</div>
+    <h4>AI-воронка для твоего бизнеса</h4>
+    <ul class="product-list">
+      <li>База про тебя — фундамент контента</li>
+      <li>Вирусные ролики на AI, которые ведут в мини-апп</li>
+      <li>Telegram Mini App с продуктами и оплатой</li>
+      <li>AI-бот с автопрогревом на большой чек</li>
+      <li>Запуск и сопровождение первого потока</li>
+    </ul>
+    <a href="https://wa.me/77073442777?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C%20AI-%D0%B2%D0%BE%D1%80%D0%BE%D0%BD%D0%BA%D1%83%20%D0%BF%D0%BE%D0%B4%20%D0%BA%D0%BB%D1%8E%D1%87%20%D0%B4%D0%BB%D1%8F%20%D0%BC%D0%BE%D0%B5%D0%B3%D0%BE%20%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81%D0%B0" target="_blank" class="product-btn">
+      Обсудить проект
+      <span class="arrow-box">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- Отзывы — убраны -->
+
+<!-- 7. ОБО МНЕ -->
+<section class="about light">
+  <div class="section-marker">( 06 ) — Обо мне</div>
+  <h2 class="section-title">
+    Я —<br><span class="accent-pearl">Алиса</span>
+  </h2>
+
+  <div class="about-photo"></div>
+
+  <p class="about-text">
+    <strong>Основатель Aspire Agency.</strong> Четыре года в digital-маркетинге и автоматизации. Работаю с экспертами и малым бизнесом в Казахстане и русскоязычных рынках.
+  </p>
+  <p class="about-text">
+    Обучила предпринимателей онлайн-продажам и продажам на маркетплейсах. Прошла путь от онлайн-магазина детской одежды до создания AI-агентов для автоматизации продаж.
+  </p>
+  <p class="about-text">
+    Устала смотреть, как сильные продукты не доходят до клиентов только потому, что эксперт не умеет продавать себя. Поэтому собираю систему, которая продаёт сама — и освобождает тебя для того, что ты действительно любишь делать.
+  </p>
+
+  <div class="about-manifest">
+    <p>Я не берусь за проекты, в которые не верю. Каждая система — авторский след. Я делаю то, за что готова отвечать.</p>
+  </div>
+</section>
+
+<!-- 8. FAQ -->
+<section class="faq">
+  <div class="section-marker">( 07 ) — FAQ</div>
+  <h2 class="section-title">
+    <span style="color: rgba(255,255,255,0.45); font-weight: 300;">Что</span><br>
+    <span style="color: #ffffff; font-weight: 700; font-style: normal;">спрашивают</span>
+  </h2>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">
+      <h5>Сколько стоит собрать такую воронку?</h5>
+      <span class="toggle">+</span>
+    </div>
+    <div class="faq-a">Стоимость зависит от ниши, количества продуктов и глубины автоматизации. На бесплатном разборе я смотрю твой проект и даю точный расчёт. Бюджеты стартуют от пакета «базового запуска» и растут под задачу.</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">
+      <h5>А если у меня нет готового продукта?</h5>
+      <span class="toggle">+</span>
+    </div>
+    <div class="faq-a">Это частая ситуация. Я начинаю не с бота, а с распаковки твоей экспертизы — собираю продуктовую линейку (лид-магнит, мини-продукт, флагман). Только потом упаковываю в воронку.</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">
+      <h5>Сколько времени уходит на запуск?</h5>
+      <span class="toggle">+</span>
+    </div>
+    <div class="faq-a">Стандартный срок — 14 рабочих дней от старта до работающей системы. Если нужна глубокая распаковка или большая линейка — до 21 дня.</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">
+      <h5>Что от меня нужно во время работы?</h5>
+      <span class="toggle">+</span>
+    </div>
+    <div class="faq-a">Два-три интервью по 40 минут на этапе распаковки, съёмка контента (помогу со сценариями) и согласование этапов. Остальное — на мне.</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">
+      <h5>Это работает в моей нише?</h5>
+      <span class="toggle">+</span>
+    </div>
+    <div class="faq-a">Работала с экспертами в коучинге, нутрициологии, бьюти, детской одежде, B2B-услугах, образовании. Если у тебя есть продукт и аудитория в соцсетях — воронка будет работать.</div>
+  </div>
+
+  <div class="faq-item" onclick="this.classList.toggle('open')">
+    <div class="faq-q">
+      <h5>Даёте гарантии?</h5>
+      <span class="toggle">+</span>
+    </div>
+    <div class="faq-a">Гарантирую то, что в моей зоне ответственности: собранную систему, работающие интеграции, готовые тексты и сценарии. Результат в деньгах зависит от продукта и бюджета — это обсуждаем на разборе честно.</div>
+  </div>
+</section>
+
+<!-- 9. CTA -->
+<section class="final-cta light" id="cta-final">
+  <div class="section-marker">( 08 ) — Связаться</div>
+  <h2 class="section-title">
+    Соберём<br><span class="accent">твою воронку</span>
+  </h2>
+  <p class="lead">Начни с бесплатного разбора. Или напиши напрямую — отвечу в течение часа.</p>
+
+  <div class="cta-stack">
+    <a href="https://t.me/alisa_azn" target="_blank" class="cta-btn primary">
+      Написать в Telegram
+      <span class="arrow-box">→</span>
+    </a>
+    <a href="https://wa.me/77073442777" class="cta-btn" target="_blank">
+      Написать в WhatsApp
+      <span class="arrow-box">→</span>
+    </a>
+    <a href="https://www.instagram.com/alisa_aimarketing" class="cta-btn" target="_blank">
+      Instagram @alisa_aimarketing
+      <span class="arrow-box">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-title">
+    <span class="accent">Aspire</span><br>
+    Agency
+  </div>
+
+  <div class="footer-contacts">
+    <a href="https://www.instagram.com/alisa_aimarketing" target="_blank">
+      <span class="label">Instagram</span>
+      @alisa_aimarketing
+    </a>
+    <a href="https://t.me/alisa_azn" target="_blank">
+      <span class="label">Telegram</span>
+      @alisa_azn
+    </a>
+    <a href="https://wa.me/77073442777" target="_blank">
+      <span class="label">WhatsApp</span>
+      +7 707 344 27 77
+    </a>
+    <a href="#">
+      <span class="label">Location</span>
+      Almaty · KZ
+    </a>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Aspire</span>
+    <span>v.1.0</span>
+  </div>
+</footer>
+
+</body>
+</html>
